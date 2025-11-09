@@ -3,22 +3,20 @@ import HeadComponent from "../components/genericComponents/HeadComponent/HeadCom
 import { getTags } from "../functions/services/metaTagService";
 
 export default function Page({ story, preview, socialtags }) {
-  story = useStoryblokState(story, { //Hook that connects the current page to the Storyblok Real Time visual editor. Needs information about the relations in order for the relations to be editable as well.
-    resolveRelations: [],
-  }, preview);
+  const sbStory = useStoryblokState(story, { resolveRelations: [] }, preview);
 
-  if (!story) {
-    return <div>story not found</div>
+  if (!sbStory || !sbStory.content) {
+    return <div>Story not found</div>;
   }
-  preview);
 
   return (
     <>
       <HeadComponent socialTags={socialtags} />
-      <StoryblokComponent blok={story.content} />
+      <StoryblokComponent blok={sbStory.content} />
     </>
   );
 }
+
 
 
 export async function getStaticProps({ params }) {
