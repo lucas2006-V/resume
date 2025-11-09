@@ -20,7 +20,9 @@ export default async function preview(req, res) {
       cookie.replace("SameSite=Lax", "SameSite=None;Secure")
     )
   );
+
+  const path = slug.startsWith("/") ? slug : `/${slug || ""}`;
  
   // Redirect to the path from entry
-  res.redirect(`/${slug}?${params[1]}`);
+  res.redirect(`${path}${params[1] ? `?${params[1]}` : ""}`);
 }
