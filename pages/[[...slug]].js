@@ -3,20 +3,16 @@ import HeadComponent from "../components/genericComponents/HeadComponent/HeadCom
 import { getTags } from "../functions/services/metaTagService";
 
 export default function Page({ story, preview, socialtags }) {
-  const sbStory = useStoryblokState(story, { resolveRelations: [] }, preview);
-
-  if (!sbStory || !sbStory.content) {
-    return <div>Story not found</div>;
+   story = useStoryblokState(story, {
+     resolveRelations: [ ] 
+    }, preview); 
+    
+    return ( 
+    <> <HeadComponent socialTags={socialtags} /> 
+    <StoryblokComponent blok={story.content} /> 
+    </> 
+    ); 
   }
-
-  return (
-    <>
-      <HeadComponent socialTags={socialtags} />
-      <StoryblokComponent blok={sbStory.content} />
-    </>
-  );
-}
-
 
 
 export async function getStaticProps({ params }) {
